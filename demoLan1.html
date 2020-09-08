@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Demo lần 1</title>
+	<style type="text/css">
+
+		body{
+		background-coor:white;
+		font-size:10pt;
+		font-family:sans-serif;
+		color:#00436e;
+		}
+	</style>
+</head>
+
+<body>
+	<script language="javascript">
+	//Mức độ dễ
+	var pics = new Array();
+	var i;
+	for (i = 0; i <= 8; i++){
+		pics[i] = new Image();
+		pics[i].src = 'image' + i + '.gif';
+	}
+	var map = new Array();
+	var j = 1;
+	for(i = 0; i <= 15; i++){
+		map[i] = j;
+		i++;
+		map[i] = j;
+		j++;
+	}
+	var tempArr = new Array();
+	var user = new Array();
+	var click = new Array(0, 0);
+	var giay, phut, ticker, ctr, id = 0, autoclick, finished;
+
+	function init()
+	{
+		clearTimeout(id);//Ngăn hàm được thiết lập với setTimeOut để thực thi
+		for (i = 0; i <= 15; i++)
+			user[i] = 0;
+		ticker = 0;
+		giay = 0;
+		phut = 0;
+		ctr = 0;
+		finished = 0;
+		autoclick = true;
+		document.form["f"].b.value = "Đang khởi tạo game";
+		Random();
+		id = setInterval('thoiGian()', 3000);//setInterval: thực hiện hàm trong khoảng thời gian nhất định
+		for(i = 0; i <= 15; i++)
+		{
+			document.images[('img' + i)].src = "image0.gif";
+			document.images[('img' + i)].alt = "";
+		}
+	}
+
+	function thoiGian(){
+		phut = Math.floor(ticker / 60);
+		giay = (ticker - (phut * 60)) + '';
+		if (giay.length == 1)
+		{
+			giay = "0" + giay;
+		}
+		ticker++;
+		document.form["f"].b.value = "     " + phut + " : " + giay + "    ";
+
+	}
+	function Random(){ // Hoán đổi vị trí ảnh
+		for (var z = 0; z <=5; z++) // thực hiện nhiều lần -> ngẫu nhiên cao
+			for (var x = 0; x<= 15; x++)
+			{
+				tempArr[0] = Math.floor(Math.random() * 16);
+				tempArr[1] = map[tempArr[0]];
+				tempArr[2] = map[x];
+				map[x] = tempArr[1];
+				map[tempArr[0]] = tempArr[2];
+			}
+	}
+	function showImage(nut){
+		if(autoclick == true)
+		{
+			autoclick = false;
+			document.images[('img' + nut)].src = 'image' + map[nut] + '.gif';
+			document.images[('img' + nut)].alt = 'Image' + map[nut];
+			if (ctr == 0)
+			{
+				ctr++;
+				click[0] = nut;
+				autoclick = true;
+			}
+			else
+			{
+				ctr = 0;
+				click[1] = nut;
+				setTimeout('xuLy()', 500)// hiển thị hộp thoại xuLy sau 500 mili giây
+			}
+		}
+	}
+	function xuLy()
+	{
+		if ((click[0] == click[1]) && (!user[click[0]]))
+		{
+			document.images[('img' + click[0])].src = "image0.gif";
+			document.images[('img' + click[0])].alt = "";
+			autoclick = true;
+		}
+		else
+		{
+			if (map[click[0]] != map[click[1]])
+			{
+				if (user[click[0]] == 0)
+				{
+					document.images[('img' + click[0])].src = "image0.gif";
+					document.images[('img' + click[0])].alt = "";
+				}
+				if (user[click[1]] == 0)
+				{
+					document.images[('img' + click[1])].src = "image0.gif";
+					document.images[('img' + click[1])].alt = "";
+				}
+			}
+			if (map[click[0]] == map[click[1]])
+			{
+				if (user[click[0]] == 0 && user[click[1]] == 0)
+					finished++;
+				//làm trắng màn hình
+				document.images[('img' + click[1])].src = "image9.png";
+				document.images[('img' + click[1])].alt = "";
+				document.images[('img' + click[0])].src = "image0.gif";
+				document.images[('img' + click[0])].alt = "";
+				user[click[0]] = 1;
+				user[click[1]] = 1;
+			}
+			if(finished >= 8)
+			{
+				setTimeout(alert('You did it in '+document.forms["f"].b.value+' !'), 10000);
+				init();
+			}
+			else
+			{
+				autoclick = true;
+			}
+		}
+	}
+
+	var t = '<table cellpadding="0" cellspacing="0" border="0">';
+	for(var r = 0; r <= 3; r++)
+	{
+		t += '<tr>';
+		for(var c = 0; c <= 3; c ++)
+			t += '<td align="center"><a href="javascript:showimage(' +((4 * r) + c) + ')" onClick="this.blur()"><img src="image0.gif" name="img' +((4 * r) + c) + '" alt="" border="0"></a></td>';
+		t += '</tr>';
+	}
+	t += '</table><br><br><form name="f"><input type="button" value="Downloading images...." name="b" onClick="init()"></form>';
+	document.write(t);
+	window.onload=init;
+</script>
+</body>
+</html>

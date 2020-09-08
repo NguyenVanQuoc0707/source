@@ -23,16 +23,22 @@
 			pics[i]=new Image();
 			pics[i].src='image'+i+'.gif';
 		}
-
-		var map = new Array(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8);
+		var j = 1;
+		var map = new Array;
+		for (i = 0; i<= 15; i++)
+		{
+			map[i++] = j;
+			map[i] = j;
+			j++;
+		}
 		var user = new Array();
 		var temparray=new Array();
 		var clickarray=new Array(0,0);
 		var ticker, sec, min, ctr, id=0, oktoclick, finished;
 
-		function init()
+		function init() 
 		{
-			clearTimeout(id);
+			clearTimeout(id); //Ngăn hàm được thiết lập với setTimeout () để thực thi
 			for(i=0;i<=15;i++)
 				user[i]=0;
 			ticker=0; 
@@ -43,7 +49,7 @@
 			oktoclick=true;
 			document.forms["f"].b.value="Resetting game table...";
 			scramble();
-			id=setInterval('runclk()', 1000);
+			id=setInterval('runclk()', 2000); //setInterval: thực hiệ hàm trong khoảng thời gian nhất định
 			for(i=0;i<=15;i++)
 			{
 				document.images[('img'+i)].src="image0.gif";
@@ -63,9 +69,9 @@
 			document.forms["f"].b.value="    "+min+":"+sec+"    ";
 		}
 
-		function scramble()
+		function scramble() // hoan doi vi tri anh 
 		{
-			for(z=0;z<5;z++){
+			for(z=0;z < 5;z++){
 				for(x=0;x<=15;x++){
 					temparray[0]=Math.floor(Math.random()*16);
 					temparray[1]=map[temparray[0]];
@@ -76,7 +82,7 @@
 			}
 		}
 
-		function showimage(but)
+		function showimage(but) // chọn đc 2 ảnh
 		{
 			if(oktoclick == true)
 			{
@@ -93,12 +99,12 @@
 				{
 					clickarray[1]=but;
 					ctr=0;
-					setTimeout('returntoold()', 600);
+					setTimeout('returntoold()', 600); // hiển thị hộp thoại returntoold sau 600 mili giây
 				}
 			}
 		}
 
-		function returntoold()
+		function returntoold() //xử lý xự kiện
 		{
 			if((clickarray[0]==clickarray[1])&&(!user[clickarray[0]]))
 			{
@@ -123,14 +129,20 @@
 				}
 				if(map[clickarray[0]]==map[clickarray[1]])
 				{
-					if(user[clickarray[0]]==0&&user[clickarray[1]]==0)
+					if(user[clickarray[0]]==0&&user[clickarray[1]]==0){
 						finished++;
+					}
+					//làm trắng màn hình
+					document.images[('img'+clickarray[1])].src="image9.png";
+					document.images[('img'+clickarray[1])].alt="";
+					document.images[('img'+clickarray[0])].src="image9.png";
+					document.images[('img'+clickarray[0])].alt="";
 					user[clickarray[0]]=1;
 					user[clickarray[1]]=1;
 				}
-				if(finished>=8)
+				if(finished >= 8)
 				{
-					alert('You did it in '+document.forms["f"].b.value+' !');
+					setTimeout(alert('You did it in '+document.forms["f"].b.value+' !'), 10000);
 					init();
 				}
 				else
