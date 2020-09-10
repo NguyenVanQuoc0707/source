@@ -8,48 +8,56 @@
 	
 }
 .baner{
-	height: 50px;
+	height: 150px;
 	text-align: center;
 	color: yellow;
 	padding-bottom:5px;
 	background-color: violet;
+	font-size: 2em;
+	padding: 10px;
 }
 .nav{
-	height: 30px;
+	height: 50px;
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 15px;
 	background-color:#E6F2A8;
 }
 
 .left{
 	float: left;
-	min-height: 500px;
+	min-height: 600px;
 	width: 150px;
 	background-color: #BFF8B0;
 }
 .right{
 	float: right;
-	min-height: 500px;
+	min-height: 600px;
 	width: 150px;
 	background-color: #BFF8B0;
 }
 .content{
 	min-height: 500px;
 	background-color: #FFFFFF;
-	text-align: center;
+	text-align:center;
 	padding-bottom: 5px;
 	
 }
 .footer{
 	clear:both;
 	height: 70px;
-	background-color: #330000;
+	background-color:#160707;
+	text-align: center;
+	font-size: 35px;
+	padding-top:;
+	color: #FFFFFF
 }
 table{
-	padding-left: 200px;
+	padding-top: 10px;
+	padding-left: 240px;
 }
 a{
 	text-decoration: none;
+	font-size:25px;
 }
 a:hover{
 	color: #ED1531;
@@ -75,6 +83,10 @@ a:hover{
 	position:absolute;
 	margin-left:0px;
 	padding-left:0px;
+}
+img{
+	height: 125px;
+	width: 130px;
 }
 
 

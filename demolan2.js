@@ -30,7 +30,7 @@ function init()
 		oktoclick=true;
 		document.forms["f"].b.value="Đang tải hình ảnh";
 		scramble();
-		id=setInterval('runclk()', 2000); //setInterval: thực hiệ hàm trong khoảng thời gian nhất định
+		id=setInterval('runclk()', 900); //setInterval: thực hiệ hàm trong khoảng thời gian nhất định
 		for(i=0;i<=15;i++)
 		{
 			document.images[('img'+i)].src="image0.gif";
@@ -138,7 +138,7 @@ for(r=0;r<=3;r++)
 		t+='<td align="center"><a href="javascript:showimage('+((4*r)+c)+')" onClick="this.blur()"><img src="image0.gif" name="img'+((4*r)+c)+'" alt="" border="0"></a></td>';
 			t+='</tr>';
 		}
-		t+='</table><br><br><form name="f"><input type="button" value="Downloading images...." name="b" onClick="init()"></form>';
+		t+='</table>';
 		document.write(t);
 
 		window.onload=init;
